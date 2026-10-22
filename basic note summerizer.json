@@ -1,0 +1,96 @@
+{
+  "name": "basic note summerizer",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        32,
+        0
+      ],
+      "id": "e200b873-6692-4f2b-b444-9dae75b5f5ff",
+      "name": "When chat message received",
+      "webhookId": "95e4cfd1-d20d-4caa-879b-ef0a1948a883"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a beginner-friendly study assistant. Summarize the student's notes into: 1. One simple definition 2. Three key bullet points 3. One simple real-life example 4. One memory sentence Use simple English. Do not add unnecessary information. STUDENT NOTES: {{ $json.chatInput }}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        256,
+        0
+      ],
+      "id": "044a1f49-7abd-4a39-b6cb-f131ae7d20d4",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        328,
+        232
+      ],
+      "id": "15bb6ec3-e0f1-4217-9f6d-de10927636b1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NuLcQXIDn29llDQD",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "193aa85b-5984-4f2e-ad28-24374eb44bcb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fd0c47c9107fb62b8e27954fcd359be49e6b819524c8657daa958e4db4be6505"
+  },
+  "nodeGroups": [],
+  "id": "svqt77urfrCjt9fL",
+  "tags": []
+}
